@@ -1,3 +1,6 @@
+body {
+	margin-top: 51px;
+}
 
 h1 {
 	margin: 0;
@@ -33,4 +36,53 @@ img {
 #view-more{
 	float: right;
 	top: 26.25px;
+}
+
+.description {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	line-height: 16px;     /* fallback */
+	max-height: 48px;      /* fallback */
+	-webkit-line-clamp: 3; /* number of lines to show */
+	-webkit-box-orient: vertical;
+}
+
+.item-name {
+	font-weight: 800;
+}
+
+.thumbnail-decoration a:link {
+    text-decoration: none;
+}
+
+.thumbnail-decoration h4:hover {
+    color: rgb(65, 79, 156);
+}
+
+.thumbnail-decoration:hover {
+	text-decoration: none;
+	border: 1px solid rgb(65, 79, 156);
+}
+
+.thumbnail-decoration:active {
+	text-decoration: none;
+	border: 1px solid rgb(78, 97, 202);
+}
+
+.price-text {
+	color: rgb(65, 79, 156);
+}
+
+.item-row {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display:         flex;
+	flex-wrap: wrap;
+}
+
+.item-row > [class*='col-'] {
+	display: flex;
+	flex-direction: column;
 }
