@@ -12,7 +12,10 @@ const db = mongoose.connection;
 require('dotenv').config();
 
 const index = require('./routes/index');
-const users = require('./routes/users');
+// const customers = require('./routes/customers');
+const items = require('./routes/items');
+const categories = require('./routes/categories');
+const carts = require('./routes/carts');
 
 const app = express();
 
@@ -30,7 +33,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
+// app.use('/customers', customers);
+app.use('/items', items);
+app.use('/categories', categories);
+app.use('/carts', carts);
 
 mongoose.connect(dbURL, err => {
   if (!err)
@@ -38,6 +44,10 @@ mongoose.connect(dbURL, err => {
   else
     console.log('Error Connect to database');
 });
+require('./models/carts.model');
+require('./models/categories.model');
+require('./models/carts.model');
+require('./models/customers.model');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
