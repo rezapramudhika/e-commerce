@@ -16,6 +16,7 @@ const index = require('./routes/index');
 const items = require('./routes/items');
 const categories = require('./routes/categories');
 const carts = require('./routes/carts');
+const login = require('./routes/login');
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use('/', index);
 app.use('/items', items);
 app.use('/categories', categories);
 app.use('/carts', carts);
+app.use('/login', login);
 
 mongoose.connect(dbURL, err => {
   if (!err)
@@ -48,6 +50,7 @@ require('./models/carts.model');
 require('./models/categories.model');
 require('./models/carts.model');
 require('./models/customers.model');
+require('./models/users.model');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

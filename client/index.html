@@ -52,7 +52,6 @@
                                     <a href="#">Something else here</a>
                                 </li>
                                 <li role="separator" class="divider"></li>
-                                <li class="dropdown-header">Nav header</li>
                                 <li>
                                     <a href="#">Separated link</a>
                                 </li>
@@ -63,9 +62,9 @@
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active">
-                            <a data-toggle="modal" data-target="#myModal">
-                                <span class="glyphicon glyphicon-shopping-cart"> </span>
+                        <li class="">
+                            <a href="#" @click="logout" v-if="token !== ''">
+                                    <span class="glyphicon glyphicon-log-out"></span> Logout
                             </a>
                         </li>
                     </ul>
@@ -74,7 +73,30 @@
             </div>
         </nav>
 
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <div class="container-fluid search-bar">
+            <div class="row">
+                <div class="col-xs-8 col-sm-8 col-md-8" style="padding-right: 0;">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-secondary" type="button">Search</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4" style="padding-left: 0;" v-if="token != ''">
+                    <a href="#" data-toggle="modal" data-target="#myModal" class="shopping-cart">
+                        <span class="glyphicon glyphicon-shopping-cart"></span> Shopping cart
+                    </a>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4" style="padding-left: 0;" v-else>
+                    <a href="#" data-toggle="modal" data-target="#login-modal" class="shopping-cart">
+                        <span class="glyphicon glyphicon-log-in"></span> Login
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="myCarousel" class="carousel slide carousel-custom" data-ride="carousel">
             <!-- Indicators -->
             <ol class="carousel-indicators">
                 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -85,15 +107,15 @@
             <!-- Wrapper for slides -->
             <div class="carousel-inner">
                 <div class="item active">
-                    <img src="http://placehold.it/720x240" alt="Los Angeles">
+                    <img src="http://placehold.it/720x240" alt="">
                 </div>
 
                 <div class="item">
-                    <img src="http://placehold.it/720x240" alt="Chicago">
+                    <img src="http://placehold.it/720x240" alt="">
                 </div>
 
                 <div class="item">
-                    <img src="http://placehold.it/720x240" alt="New York">
+                    <img src="http://placehold.it/720x240" alt="">
                 </div>
             </div>
 
@@ -107,40 +129,89 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
-
+        <!-- <category-component :categories="categories" :items="items"></category-component> -->
         <div class="container content" v-for="category in categories">
-            <div class="row">
+            <category-component :category="category"></category-component>
+            <!-- <div class="row">
                 <div class="col-xs-8 col-sm-8 col-md-8 pull-left">
-                    <h3>{{category.name}}</h3>
+                    <h3><strong>{{category.name}}</strong></h3>
                 </div>
                 <div class="col-xs-4 col-sm-4 col-md-4 pull-right" style="margin-top: 20px;">
                     <a href="#" style="float: right">View more</a>
                 </div>
-            </div>
+            </div> -->
             <div class="container no-padding">
                 <hr style="margin-top: 0; border-top: 5px solid #eee">
             </div>
             <div class="row item-row">
-                <div class="col-xs-6 col-sm-4 col-md-4" v-for="item in items" v-if="item.categoryId === category.id">
-                    <div class="thumbnail thumbnail-decoration">
-                        <a href="#" class="" v-on:click="addToCarts(item)">
-                            <img :src="item.img" :alt="item.name" style="width: 244px; height: 244px">
+                <div class="col-xs-6 col-sm-4 col-md-4" v-for="item in items" v-if="item.category === category._id">
+                    <item-component :item="item" :carts="carts"></item-component>
+                    <!-- <div class="thumbnail thumbnail-decoration">
+                        <a href="#" class="" data-toggle="modal" data-target="#myModal" v-on:click="addToCarts(item)">
+                            <img :src="item.img" :alt="item.name" style="min-width: 144px; min-height: 144px">
                             <div class="caption">
                                 <h4 class="item-name">{{item.name}}</h4>
                                 <p class="description">{{item.description}}</p>
                                 <h4 class="price-text">{{formatUang(item.price)}}</h4>
                                 <p class="disc-text"></p>
-                                <!-- <p>
-                                    <button class="btn btn-default btn-md btn-block" role="button" v-on:click="addToCarts(item)"></button>
-                                </p> -->
                             </div>
                         </a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
         <br>
         <br>
+        <div class="modal fade" id="login-modal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">
+                            <span class="glyphicon glyphicon-shopping-cart"></span> Login to your account</h4>
+                    </div>
+                    <div class="modal-body-login">
+                        <div class="form-group">
+                            <label for="usr">Email</label>
+                            <input type="text" class="form-control" id="usr">
+                        </div>
+                        <div class="form-group">
+                            <label for="psw">Password</label>
+                            <input type="password" class="form-control" id="psw">
+                        </div>
+                    </div>
+                    <div class="modal-footer-login">
+                        <!-- <button type="button" class="btn btn-success" data-dismiss="modal">Login</button> -->
+                        <button class="login-btn">Login</button>
+                        <p>New member?
+                            <a href="#">Register</a> here</p>
+                        <div class="line-through">
+                            <p>
+                                <span class="muted">or connect to your social media</span>
+                            </p>
+                        </div>
+                        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                        </fb:login-button>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="modal-dialog">
+                <div class="loginmodal-container">
+                    <h1>Login to Your Account</h1>
+                    <br>
+                    <form>
+                        <input type="text" name="user" placeholder="Username">
+                        <input type="password" name="pass" placeholder="Password">
+                        <input type="submit" name="login" class="login loginmodal-submit" value="Login">
+                    </form>
+
+                    <div class="login-help">
+                        <a href="#">Register</a> -
+                        <a href="#">Forgot Password</a>
+                    </div>
+                </div>
+            </div> -->
+        </div>
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -150,7 +221,7 @@
                             <span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</h4>
                     </div>
                     <div class="modal-body">
-                        <table class="table">
+                        <table class="table" style="min-width: 75%">
                             <col width="50%">
                             <col width="20%">
                             <col width="30%">
@@ -178,12 +249,17 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Checkout</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="facebook-login.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="vue-script.js"></script>
+    <script src="category-component.js"></script>
+    <script src="item-component.js"></script>
 </body>
 
 </html>

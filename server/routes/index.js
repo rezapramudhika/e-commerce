@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const { getIndex } = require('../controllers/index.controller')
+const { authLogin } = require('../middlewares/auth');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+router.get('/', authLogin, getIndex);
 
 module.exports = router;

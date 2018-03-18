@@ -1,5 +1,5 @@
 body {
-	margin-top: 51px;
+	margin-top: 50px;
 }
 
 h1 {
@@ -13,6 +13,96 @@ h1 {
 
 .no-padding {
 	padding: 0;
+}
+
+.navbar-default {
+	color: white;
+	background-image: linear-gradient(to bottom,#3F51B5 0,#3F51B5 100%);
+	border-color: rgb(57, 78, 148);
+}
+
+.navbar-default .navbar-brand {
+    color: #fff;
+}
+
+.navbar-default .navbar-brand:hover {
+    color: #ebebeb;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #fff;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+    color: #ebebeb;
+}
+
+.navbar-default .navbar-nav>li>a:focus {
+    color: #ebebeb;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #fff;
+}
+
+@media (max-width: 767px){
+	.navbar-default .navbar-nav .open .dropdown-menu>li>a {
+		color: #fff;
+	}
+	.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+		background-color: rgb(65, 88, 161);
+	}
+}
+
+@media (max-width: 550px){
+	h3 {
+		font-size: 20px;
+	}
+	h4 {
+		font-size: 14px;
+	}
+}
+
+@media (max-width: 600px){
+	.search-bar {
+		top:50px;
+		position: fixed;
+		z-index: 100;
+		padding: 10px; 
+		background-color: #5C6BC0;
+	}
+	.carousel-custom {
+		margin-top: 104px;
+	}
+}
+
+@media (min-width: 601px){
+	.search-bar {
+		top:50px;
+		position: fixed;
+		z-index: 100;
+		padding: 20px 50px 20px 50px; 
+		background-color: #5C6BC0;
+	}
+	.carousel-custom {
+		margin-top: 124px;
+	}
+}
+
+.shopping-cart {
+	float:right; 
+	margin-top: 6px;
+	color: white;
+}
+
+.shopping-cart:hover {
+	text-decoration: none;
+	color: rgb(255, 253, 225);
+}
+
+.shopping-cart:focus {
+	text-decoration: none;
+	color: rgb(255, 253, 225);
 }
 
 .card {
@@ -78,11 +168,62 @@ img {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
-	display:         flex;
+	display: flex;
 	flex-wrap: wrap;
 }
 
 .item-row > [class*='col-'] {
 	display: flex;
 	flex-direction: column;
+}
+
+.modal-footer-login {
+	padding: 0 25px 15px 25px;
+	text-align: center;
+}
+
+.modal-footer-login p{
+	margin-top: 10px;
+}
+
+.login-btn {
+	width: 100%;
+	padding: 10px;
+	border-top: 1px solid #e5e5e5;
+	background-color: rgb(65, 174, 224);
+	color: #fff
+}
+
+.login-btn:hover {
+	background-color: rgb(101, 189, 230);
+}
+
+.line-through {
+    border-top: 1px solid #ddd;
+    margin: 30px 0;
+    position: relative;
+    text-align: center;
+}
+
+.line-through span {
+    background: #fff;
+    padding: 0 10px;
+}
+
+.line-through p {
+    position: absolute;
+    text-align: center;
+    top: -8px;
+	width: 100%;
+	font-size: 10px;
+	margin: 0 0 10px;
+}
+
+.muted {
+    color: #999;
+}
+
+.modal-body-login {
+    position: relative;
+    padding: 15px 25px 10px 25px;
 }
