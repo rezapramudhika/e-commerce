@@ -1,7 +1,7 @@
 new Vue({
     el: '#app',
     data: {
-        test: 'Hello World',
+        test: 'Hacktivcommerce',
         categories: [],
         items: [],
         carts: [],
