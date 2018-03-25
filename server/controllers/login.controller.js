@@ -12,9 +12,16 @@ module.exports = {
         User.findOne({ 'email': email })
             .then(user => {
                 if (user) {
-                    const token = jwt.sign({ email: user.email, id: user._id, name: user.name, imgUrl: user.imgUrl, isAdmin: user.isAdmin}, 'secret-ui')
+                    const token = jwt.sign({ email: user.email, id: user._id, name: user.name, imgUrl: user.imgUrl, isAdmin: user.isAdmin }, 'secret-ui')
                     res.status(200).json({
-                        token: token
+                        message: 'Signin success',
+                        token,
+                        user: {
+                            id: user.id,
+                            email: user.email,
+                            name: user.name,
+                            isAdmin: user.isAdmin
+                        }
                     })
                 } else {
                     const newUser = new User({
@@ -25,9 +32,16 @@ module.exports = {
                     })
                     newUser.save((err, data) => {
                         console.log(data);
-                        const token = jwt.sign({ email: data.email, id: data._id, name: data.name, imgUrl: data.imgUrl, isAdmin: data.isAdmin}, 'secret-ui');
+                        const token = jwt.sign({ email: data.email, id: data._id, name: data.name, imgUrl: data.imgUrl, isAdmin: data.isAdmin }, 'secret-ui');
                         res.status(200).json({
-                            token: token
+                            message: 'Signin success',
+                            token,
+                            user: {
+                                id: data.id,
+                                email: data.email,
+                                name: data.name,
+                                isAdmin: user.isAdmin
+                            }
                         })
                     })
                 }
@@ -39,48 +53,21 @@ module.exports = {
                 if (data) {
                     let check = bcrypt.compareSync(req.body.password, data.password);
                     if (check) {
-                        var token = jwt.sign({ id: data.id, email: data.email, name: data.name }, 'secret-ui');
+                        var token = jwt.sign({ email: data.email, id: data._id, name: data.name, imgUrl: data.imgUrl, isAdmin: data.isAdmin }, 'secret-ui');
                         res.status(200).json({
                             message: 'Signin success',
+                            token,
                             user: {
                                 id: data.id,
                                 email: data.email,
                                 name: data.name,
-                                token: token
+                                isAdmin: data.isAdmin
                             }
                         })
                     }
                 } else {
                     res.status(404).json({
                         message: 'user not found'
-                    })
-                }
-            })
-    },
-    logout(req, res) {
-        const token = req.body.token
-        const decode = jwt.verify(token, 'secret-ui')
-
-        User.findOne({ 'email': email })
-            .then(dataUser => {
-                if (dataUser) {
-                    const token = jwt.sign({ email: dataUser.email, fbToken: fbToken }, 'secret-ui')
-                    res.status(200).json({
-                        dataUser,
-                        token: token
-                    })
-                } else {
-                    const newUser = new User({
-                        email: email,
-                        facebook_id: facebookId
-                    })
-
-                    newUser.save((err, data) => {
-                        const token = jwt.sign({ email: dataUser.email, fbToken: fbToken }, 'secret-ui')
-                        res.status(200).json({
-                            token: token,
-                            dataUser: data
-                        })
                     })
                 }
             })

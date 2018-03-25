@@ -12,7 +12,7 @@ const db = mongoose.connection;
 require('dotenv').config();
 
 const index = require('./routes/index');
-// const customers = require('./routes/customers');
+const register = require('./routes/register');
 const items = require('./routes/items');
 const categories = require('./routes/categories');
 const carts = require('./routes/carts');
@@ -34,7 +34,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-// app.use('/customers', customers);
+app.use('/register', register);
 app.use('/items', items);
 app.use('/categories', categories);
 app.use('/carts', carts);

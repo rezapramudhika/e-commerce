@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>E-commerce</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -27,7 +27,7 @@
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-                        aria-controls="navbar">
+                        aria-controls="navbar" v-if="token !== ''">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -37,34 +37,16 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Category
-                                <span class="caret"></span>
+                        <li class="">
+                            <a href="#" data-toggle="modal" data-target="#transactionListModal" v-if="token !== ''">
+                                Transaction List
                             </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="#">Action</a>
-                                </li>
-                                <li>
-                                    <a href="#">Another action</a>
-                                </li>
-                                <li>
-                                    <a href="#">Something else here</a>
-                                </li>
-                                <li role="separator" class="divider"></li>
-                                <li>
-                                    <a href="#">Separated link</a>
-                                </li>
-                                <li>
-                                    <a href="#">One more separated link</a>
-                                </li>
-                            </ul>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
                             <a href="#" @click="logout" v-if="token !== ''">
-                                    <span class="glyphicon glyphicon-log-out"></span> Logout
+                                <span class="glyphicon glyphicon-log-out"></span> Logout
                             </a>
                         </li>
                     </ul>
@@ -107,15 +89,15 @@
             <!-- Wrapper for slides -->
             <div class="carousel-inner">
                 <div class="item active">
-                    <img src="http://placehold.it/720x240" alt="">
+                    <img src="http://placehold.it/920x255" alt="">
                 </div>
 
                 <div class="item">
-                    <img src="http://placehold.it/720x240" alt="">
+                    <img src="http://placehold.it/920x255" alt="">
                 </div>
 
                 <div class="item">
-                    <img src="http://placehold.it/720x240" alt="">
+                    <img src="http://placehold.it/920x255" alt="">
                 </div>
             </div>
 
@@ -145,7 +127,7 @@
             </div>
             <div class="row item-row">
                 <div class="col-xs-6 col-sm-4 col-md-4" v-for="item in items" v-if="item.category === category._id">
-                    <item-component :item="item" :carts="carts"></item-component>
+                    <item-component :token="token" :item="item" :carts="carts"></item-component>
                     <!-- <div class="thumbnail thumbnail-decoration">
                         <a href="#" class="" data-toggle="modal" data-target="#myModal" v-on:click="addToCarts(item)">
                             <img :src="item.img" :alt="item.name" style="min-width: 144px; min-height: 144px">
@@ -160,57 +142,67 @@
                 </div>
             </div>
         </div>
-        <br>
-        <br>
         <div class="modal fade" id="login-modal" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">
-                            <span class="glyphicon glyphicon-shopping-cart"></span> Login to your account</h4>
+                            <span class="glyphicon glyphicon-log-in"></span> Login to your account</h4>
                     </div>
                     <div class="modal-body-login">
                         <div class="form-group">
-                            <label for="usr">Email</label>
-                            <input type="text" class="form-control" id="usr">
+                            <label for="emailLogin">Email</label>
+                            <input type="text" class="form-control" id="emailLogin">
                         </div>
                         <div class="form-group">
-                            <label for="psw">Password</label>
-                            <input type="password" class="form-control" id="psw">
+                            <label for="passwordLogin">Password</label>
+                            <input type="password" class="form-control" id="passwordLogin">
                         </div>
                     </div>
-                    <div class="modal-footer-login">
+                    <div class="modal-footer-login text-centered">
                         <!-- <button type="button" class="btn btn-success" data-dismiss="modal">Login</button> -->
-                        <button class="login-btn">Login</button>
+                        <button class="login-btn" @click='login'>Login</button>
                         <p>New member?
-                            <a href="#">Register</a> here</p>
+                            <a href="#" data-toggle="modal" data-target="#register-modal">Register</a> here</p>
                         <div class="line-through">
                             <p>
                                 <span class="muted">or connect to your social media</span>
                             </p>
                         </div>
-                        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-                        </fb:login-button>
+                        <div class="fb-login-button" scope="public_profile,email" data-max-rows="1" data-size="medium" data-button-type="continue_with"
+                            data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false" onlogin="checkLoginState();"></div>
                     </div>
                 </div>
             </div>
-            <!-- <div class="modal-dialog">
-                <div class="loginmodal-container">
-                    <h1>Login to Your Account</h1>
-                    <br>
-                    <form>
-                        <input type="text" name="user" placeholder="Username">
-                        <input type="password" name="pass" placeholder="Password">
-                        <input type="submit" name="login" class="login loginmodal-submit" value="Login">
-                    </form>
-
-                    <div class="login-help">
-                        <a href="#">Register</a> -
-                        <a href="#">Forgot Password</a>
+        </div>
+        <div class="modal fade" id="register-modal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">
+                            <span class="glyphicon glyphicon-log-in"></span> Create an account</h4>
+                    </div>
+                    <div class="modal-body-login">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="emailRegister">Email</label>
+                            <input type="email" class="form-control" id="emailRegister">
+                        </div>
+                        <div class="form-group">
+                            <label for="passwordRegister">Password</label>
+                            <input type="password" class="form-control" id="passwordRegister">
+                        </div>
+                    </div>
+                    <div class="modal-footer-login text-centered">
+                        <button class="login-btn" @click='register'>Register</button>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </div>
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
@@ -249,17 +241,105 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success" data-dismiss="modal">Checkout</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal" @click="checkout">Checkout</button>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="transactionListModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content" v-if='transactionList.length !== 0'>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">
+                            <span class="glyphicon glyphicon-shopping-cart"></span> Transaction List</h4>
+                    </div>
+                    <div class="modal-body" v-for='(transaction, i) in transactionList'>
+                        <h4>
+                            <strong>#{{transaction._id}}</strong>
+                        </h4>
+                        <table class="table" style="min-width: 75%">
+                            <col width="50%">
+                            <col width="20%">
+                            <col width="30%">
+                            <thead>
+                                <tr>
+                                    <th>Item Name</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(item, i) in transaction.items">
+                                    <td>{{item.name}}</td>
+                                    <td>{{item.quantity}}</td>
+                                    <td>{{formatUang(item.price)}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr v-if='transactionList.length > 1'>
+                    </div>
+                </div>
+                <div class="modal-content" v-else>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">
+                            <span class="glyphicon glyphicon-shopping-cart"></span> Transaction List</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4>You have not made any transaction yet</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="add-item-modal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4>Add new item</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="categoryItem">
+                                <option v-for="(category, i) in categories" :value="category._id">{{category.name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="itemName">Name</label>
+                            <input type="text" class="form-control" id="itemName">
+                        </div>
+                        <div class="form-group">
+                            <label for="itemDescription">Description</label>
+                            <input type="text" class="form-control" id="itemDescription">
+                        </div>
+                        <div class="form-group">
+                            <label for="itemPrice">Price</label>
+                            <input type="number" class="form-control" id="itemPrice">
+                        </div>
+                        <div class="form-group">
+                            <label for="itemImage">Image</label>
+                            <input type="file" class="form-control-file" id="itemImage" @change="onFileChange">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" @click='addItem'>Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="navbar navbar-default-bottom navbar-fixed-bottom pointer text-centered" href="#" data-toggle="modal" data-target="#add-item-modal"
+            v-if="isAdmin">
+            <h4>Add item</h4>
+        </div>
     </div>
-    <script src="facebook-login.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="vue-script.js"></script>
+    <script src="facebook-login.js"></script>
     <script src="category-component.js"></script>
     <script src="item-component.js"></script>
+    <script src="vue-script.js"></script>
 </body>
 
 </html>

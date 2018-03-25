@@ -74,6 +74,7 @@ function statusChangeCallback(response) {
             imgUrl: response.picture.data.url,
         })
         .then(function (response_login) {
+            localStorage.setItem('id', response_login.data.user.id)
             localStorage.setItem('token', response_login.data.token)
             window.location.href = 'index.html';
         })

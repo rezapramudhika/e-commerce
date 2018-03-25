@@ -1,7 +1,16 @@
 Vue.component('item-component', {
     template: `
         <div class="thumbnail thumbnail-decoration">
-            <a href="#" class="" data-toggle="modal" data-target="#myModal" v-on:click="addToCarts(item)">
+            <a href="#" class="" data-toggle="modal" data-target="#myModal" v-if="token !== ''" v-on:click="addToCarts(item)">
+                <img :src="item.img" :alt="item.name" style="min-width: 144px; min-height: 144px">
+                <div class="caption">
+                    <h4 class="item-name">{{item.name}}</h4>
+                    <p class="description">{{item.description}}</p>
+                    <h4 class="price-text">{{formatUang(item.price)}}</h4>
+                    <p class="disc-text"></p>
+                </div>
+            </a>
+            <a href="#" class="" data-toggle="modal" data-target="#login-modal" v-else>
                 <img :src="item.img" :alt="item.name" style="min-width: 144px; min-height: 144px">
                 <div class="caption">
                     <h4 class="item-name">{{item.name}}</h4>
@@ -12,7 +21,7 @@ Vue.component('item-component', {
             </a>
         </div>
     `,
-    props:['item', 'carts'],
+    props:['token', 'item', 'carts'],
     data: function () {
         return {};
     },

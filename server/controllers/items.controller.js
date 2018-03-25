@@ -3,6 +3,7 @@ const Category = require('../models/categories.model');
 
 module.exports = {
     create: (req, res) => {
+        req.body.img = req.file.cloudStoragePublicUrl;
         Item.create(req.body, (err, data) => {
             if (err) {
                 console.log(err);

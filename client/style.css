@@ -1,5 +1,6 @@
 body {
 	margin-top: 50px;
+	margin-bottom: 50px;
 }
 
 h1 {
@@ -226,4 +227,21 @@ img {
 .modal-body-login {
     position: relative;
     padding: 15px 25px 10px 25px;
+}
+
+.text-centered {
+    text-align: center;
+}
+.pointer:hover {
+    cursor: pointer;
+}
+
+.navbar-default-bottom {
+    background-color: rgb(65, 88, 161);
+    color: white;
+}
+
+.navbar-default-bottom h4{
+    margin-top: 15px;
+    margin-bottom: 15px;
 }

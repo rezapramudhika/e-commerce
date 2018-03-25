@@ -1,4 +1,5 @@
 const Cart = require('../models/carts.model');
+const User = require('../models/users.model');
 
 module.exports = {
     create: (req, res) => {
@@ -16,7 +17,10 @@ module.exports = {
         })
     },
     findAll: (req, res) => {
-        Cart.find()
+        Cart.find({
+            user: req.params.id
+        })
+            .populate('user')
             .exec()
             .then((data) => {
                 res.status(200).json({
@@ -35,6 +39,7 @@ module.exports = {
         Cart.findOne({
             _id: req.params.id
         })
+            .populate('user')
             .exec()
             .then((data) => {
                 res.status(200).json({
