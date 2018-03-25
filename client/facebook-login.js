@@ -67,7 +67,7 @@ function statusChangeCallback(response) {
     FB.api('/me', {fields: ['id', 'name', 'email', 'address', 'picture.width(150).height(150)']}, function(response) {
       console.log('Successful login for: ' + response.name);
       console.log(response)
-      axios.post('http://localhost:3000/login/fb', {
+      axios.post('https://hacktivcommerce-server.rezapramudhika.com/login/fb', {
             facebookId: response.id,
             email: response.email,
             name: response.name,

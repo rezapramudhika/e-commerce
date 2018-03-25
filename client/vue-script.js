@@ -1,5 +1,5 @@
 const request = axios.create({
-    baseURL: 'http://localhost:3000',
+    baseURL: 'https://hacktivcommerce-server.rezapramudhika.com',
     headers: { 'token': localStorage.getItem('token') }
 })
 
@@ -43,7 +43,7 @@ new Vue({
             console.log(itemId)
         },
         checkout: function () {
-            request.post('http://localhost:3000/carts', {
+            request.post('/carts', {
                 items: this.carts,
                 user: localStorage.getItem('id'),
             })
@@ -73,7 +73,7 @@ new Vue({
                 send.append('name', itemName)
                 send.append('description', itemDescription)
                 send.append('price', itemPrice)
-                axios.post('http://localhost:3000/items', send)
+                axios.post('https://hacktivcommerce-server.rezapramudhika.com/items', send)
                     .then((data) => {
                         alert('New item added');
                         window.location.href = 'index.html';
@@ -87,7 +87,7 @@ new Vue({
             let name = document.querySelector('input#name').value;
             let email = document.querySelector('input#emailRegister').value;
             let password = document.querySelector('input#passwordRegister').value;
-            axios.post('http://localhost:3000/register', {
+            axios.post('https://hacktivcommerce-server.rezapramudhika.com/register', {
                 name: name,
                 email: email,
                 password: password
@@ -103,7 +103,7 @@ new Vue({
         login: function () {
             let email = document.querySelector('input#emailLogin').value;
             let password = document.querySelector('input#passwordLogin').value;
-            axios.post('http://localhost:3000/login', {
+            axios.post('https://hacktivcommerce-server.rezapramudhika.com/login', {
                 email: email,
                 password: password
             })
@@ -127,7 +127,7 @@ new Vue({
         }
     },
     created: function () {
-        axios.get('http://localhost:3000/', {
+        axios.get('https://hacktivcommerce-server.rezapramudhika.com/', {
             headers: { token: localStorage.getItem('token') }
         })
             .then((data) => {
@@ -142,9 +142,7 @@ new Vue({
             })
         if (localStorage.getItem('token') !== null) {
             this.token = localStorage.getItem('token');
-            axios.get(`http://localhost:3000/carts/${localStorage.getItem('id')}`, {
-                headers: { token: localStorage.getItem('token') }
-            })
+            request.get(`/carts/${localStorage.getItem('id')}`, {})
                 .then((data) => {
                     this.transactionList = data.data.data;
                 })
